@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config>
+	<mood type="emotion">3</mood>
+	<display_color type="display_color">255 0 0</display_color>
+	<volume_level type="volume_level">70</volume_level>
+</config>

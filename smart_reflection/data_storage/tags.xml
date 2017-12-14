@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<tags>
+	<hello type="answer_category">greet</hello>
+	<hi type="answer_category">greet</hi>
+	<good_morning type="answer_category">greet</good_morning>
+	<good_evening type="answer_category">greet</good_evening>
+	<how type="answer_category">how</how>
+
+</tags>
