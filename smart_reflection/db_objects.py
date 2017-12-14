@@ -1,10 +1,10 @@
+import re
 import sqlite3
 import xml.etree.ElementTree as ET
 
 
 class config:
     def __init__(self, r): 
-        print(r.tag)
         self.root = r
         self.mood = self.root.find('mood')
 
@@ -24,32 +24,65 @@ class config:
 
 class speach:
     def __init__(self, r):
-        print(r[0].tag)
-        self.root = r
+        self.roots = r
+        self.answer = ""
+        self.question = ""
 
-    #def get_answer(self, l):
-        #for i in l:
-            #m = self.root.find(i)
-            #if m != None:
-             #   print(m.tag)
-            #for j in self.root:
-                #print(j)
-            #m = self.root.find(i)
-            #if None != m:
-                #print(m.text)
-        #return ""
+    def get_taged_string(self, l):
+        l = re.sub(r'[^\w]', ' ', l).lower().split(" ")
+        tg = db_manager().get_tags_object().get_tags()
+        index = 0
+        ls = list()
+        for i in l:
+            t = tg.get(i)
+            if t != None:
+                ls.append(t)
+            elif index + 1 < len(l):
+                t = tg.get(l[index] + "_" + l[index + 1])
+                if t != None:
+                    ls.append(t)
+                elif index + 2 < len(l):
+                    t = tg.get(l[index] + "_" + l[index + 1] + "_" + l[index + 2])
+                    if t != None:
+                        ls.append(t)
+            index += 1
+        if len(ls) == 0:
+            ls.append("None")
+        return ls
+
+#   def get_answer_(self, r, index = 0):
+#       for i in r:
+#           if i.tag == self.question[index]:
+#               print(i.tag)
+#
+#   def exist_tag(self, r, s):
+#       for i in r:
+#           if s == i.tag:
+#               return 1
+#       return 0
+
+    def get_answer(self, s):
+        c = db_manager().get_config_object()
+        self.question = self.get_taged_string(s)
+        print(self.question)
+#       self.answer = ""
+#       for i in self.roots:
+#           self.get_answer_(i)
+#       self.question = ""
+        return self.answer
 
 class tags:
     def __init__(self, r):
-        print(r.tag)
         self.word_to_tag = dict()
         self.root = r
         for i in self.root:
             self.word_to_tag[i.tag] = i.text
 
+    def get_tags(self):
+        return self.word_to_tag;
+
 class phrase:
     def __init__(self, r):
-        print(r.tag)
         self.root = r
 
 

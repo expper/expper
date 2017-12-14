@@ -11,6 +11,8 @@ if __name__ == "__main__":
     t = m.get_tags_object()
     p = m.get_speach_object()
 
+    txt = s.get_answer("Hello how are you")
+    print (txt)
     #dd = d.get_config_object()
     #ss = d.get_speach_object(dd)
     #dd.set_state("mood", "88")
