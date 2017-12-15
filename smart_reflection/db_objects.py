@@ -50,25 +50,39 @@ class speach:
             ls.append("None")
         return ls
 
-#   def get_answer_(self, r, index = 0):
-#       for i in r:
-#           if i.tag == self.question[index]:
-#               print(i.tag)
-#
-#   def exist_tag(self, r, s):
-#       for i in r:
-#           if s == i.tag:
-#               return 1
-#       return 0
+    def add_answer_if_exist(self, r):
+        c = db_manager().get_config_object()
+        b = False
+        for i in r:
+            m = i.get('mood')
+            if m == c.get_mood_state() or m == "0":
+                for j in i:
+                    if j.tag == "answer":
+                        self.answer += j.text + " "
+                        b = True
+                    if j.tag == "mood":
+                        c.set_mood_state(j.text)
+                break
+        return b
+
+
+    def find_answer(self, r, index = 0):
+        if r.tag == self.question[index]:
+            if True == self.add_answer_if_exist(r):
+                del self.question[0:index + 1]
+            else:
+                for i in r:
+                    self.find_answer(i, index + 1)
+
 
     def get_answer(self, s):
-        c = db_manager().get_config_object()
         self.question = self.get_taged_string(s)
-        print(self.question)
-#       self.answer = ""
-#       for i in self.roots:
-#           self.get_answer_(i)
-#       self.question = ""
+        self.answer = ""
+        for i in self.roots:
+            self.find_answer(i)
+            if len(self.question) == 0:
+                break
+        self.question = ""
         return self.answer
 
 class tags:

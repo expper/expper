@@ -5,6 +5,9 @@
 	<good_morning type="answer_category">greet</good_morning>
 	<good_evening type="answer_category">greet</good_evening>
 	<how type="answer_category">how</how>
+	<what type="answer_category">what</what>
 	<you type="answer_category">you</you>
+	<your type="answer_category">you</your>
+	<name type="answer_category">name</name>
 
 </tags>

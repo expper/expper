@@ -13,11 +13,7 @@ if __name__ == "__main__":
 
     txt = s.get_answer("Hello how are you")
     print (txt)
-    #dd = d.get_config_object()
-    #ss = d.get_speach_object(dd)
-    #dd.set_state("mood", "88")
-    #dd = ss.get_config()
-    #print(dd.get_state("mood"))
-
-    #print(ss.get_answer({"greet", "how", "you"}))
-
+    txt = s.get_answer("What is your name")
+    print (txt)
+    txt = s.get_answer("Hello how are you")
+    print (txt)

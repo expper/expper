@@ -36,4 +36,13 @@
 		    </default_mood>
 	    </you>
     </how>
+    <what type="text">
+	    <you type="text">
+		    <name type="text">
+			    <default_mood type="answer_text" mood="0">
+				    <answer>My name is Heros</answer>
+			    </default_mood>
+		    </name>
+	    </you>
+    </what>
 </speach>
