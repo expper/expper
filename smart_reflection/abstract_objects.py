@@ -65,6 +65,17 @@ class input_voice(input_object):
         txt = sp.get_answer(self.__m_text)
         return output_voice(txt)
             
+class input_phrase(input_object):
+
+    def __init__(self, t):
+        super().__init__(object_type.INPUT_VOICE)
+        self.__m_text = t
+
+    def get_text(self):
+        return self.__m_text
+
+    def to_output_object(self):
+        return output_voice(self.__m_text)
 
 
 

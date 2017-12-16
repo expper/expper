@@ -99,6 +99,15 @@ class phrase:
     def __init__(self, r):
         self.root = r
 
+    def find_phrases(self):
+        c = db_manager().get_config_object()
+        l = list()
+        for i in self.root:
+            m = i.get('mood')
+            if m == c.get_mood_state() or m == "0":
+                l.append(i.text)
+        return l
+
 
 class Singleton(type):
     def __init__(cls, name, bases, attrs, **kwargs):
