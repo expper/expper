@@ -50,15 +50,41 @@ class speach:
             ls.append("None")
         return ls
 
+    def replace_attrs(self, t, f):
+        for i in f:
+            t = t.replace(i, f[i])
+        return t
+
+    def is_unknown_attr(self, f):
+        if len(f) == 0:
+            return False
+        for i in f:
+            if f[i] == "":
+                return True
+        return False
+
+    def get_attrs(self, r):
+        l = r.attrib
+        ll = {}
+        for i in l:
+            if i[0] == '_':
+                if l[i] == "name_from_face":
+                    ll[i] = "John" #get_name_from_face()
+        return ll 
+
     def add_answer_if_exist(self, r):
         c = db_manager().get_config_object()
         b = False
         for i in r:
             m = i.get('mood')
             if m == c.get_mood_state() or m == "0":
+                ff = self.get_attrs(i)
+                if self.is_unknown_attr(ff):
+                    continue
                 for j in i:
                     if j.tag == "answer":
-                        self.answer += j.text + " "
+                        txt = self.replace_attrs(j.text, ff)
+                        self.answer += txt + " "
                         b = True
                     if j.tag == "mood":
                         c.set_mood_state(j.text)

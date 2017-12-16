@@ -44,7 +44,7 @@ class controller(metaclass=Singleton):
     def get_input_objects(self):
         l = list();
         s = self.__m_voic_detection.get_current_text()
-        if s == "":
+        if s != "":
             print("Question--> ", s)
             l.append(input_voice(s))
         elif self.time_cmp.get_time_diff_M() > 5:
@@ -53,7 +53,6 @@ class controller(metaclass=Singleton):
             if len(ll) > 0:
                 idx = random.randint(0, len(ll) - 1)
                 l.append(input_phrase(ll[idx]))
-        print(l)
         return l
 
     def to_outputs(self, l):

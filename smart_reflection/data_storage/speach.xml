@@ -5,7 +5,7 @@
 		    <answer>Hi, I am happy to see you</answer>
 	    </happy_mood>
 	    <medium_mood type="answer_text" mood="3">
-		    <answer>Hellow</answer>
+		    <answer>Hello</answer>
 		    <mood>5</mood>
 	    </medium_mood>
 	    <angry_mod type="answer_text" mood="1">
@@ -13,14 +13,17 @@
 		    <mood>3</mood>
 	    </angry_mod>
 	    <default_mood type="answer_text" mood="0">
-		    <answer>Hellow how can I help you</answer>
+		    <answer>Hello how can I help you</answer>
 		    <mood>3</mood>
 	    </default_mood>
     </greet>
     <how type="text">
 	    <you type="text">
+		    <happy_mood type="answer_text" mood="5" _name="name_from_face">
+			    <answer>I am very happy _name, thank you</answer>
+		    </happy_mood>
 		    <happy_mood type="answer_text" mood="5">
-			    <answer>I am very happy, thank you</answer>
+			    <answer>I am very happy, thanks</answer>
 		    </happy_mood>
 		    <medium_mood type="answer_text" mood="3">
 			    <answer>Not bad thank you</answer>
