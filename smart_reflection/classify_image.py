@@ -46,8 +46,17 @@ from six.moves import urllib
 import tensorflow as tf
 
 
+class Singleton(type):
+    def __init__(cls, name, bases, attrs, **kwargs):
+        super().__init__(name, bases, attrs)
+        cls._instance = None
 
-class classify_image:
+    def __call__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
+
+class classify_image(metaclass=Singleton):
 
     FLAGS = None
     UNPARSED = None
@@ -165,7 +174,7 @@ class classify_image:
             for node_id in top_k:
                 human_string = node_lookup.id_to_string(node_id)
                 score = predictions[node_id]
-                score = round(score * 100, 3)
+                score = round(score * 100, 2)
                 if score > 30:
                     self.Res[human_string] = score
 

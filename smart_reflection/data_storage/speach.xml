@@ -47,5 +47,10 @@
 			    </default_mood>
 		    </name>
 	    </you>
+	    <this type="text">
+		    <default_mood type="answer_text" mood="0" _text="text_from_object">
+			    <answer>This is _text</answer>
+		    </default_mood>
+	    </this>
     </what>
 </speach>

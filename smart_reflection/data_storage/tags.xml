@@ -9,5 +9,8 @@
 	<you type="answer_category">you</you>
 	<your type="answer_category">you</your>
 	<name type="answer_category">name</name>
+	<what_is type="answer_category">what</what_is>
+	<whats type="answer_category">what</whats>
+	<this type="answer_category">this</this>
 
 </tags>

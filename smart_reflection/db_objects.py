@@ -1,6 +1,7 @@
 import re
 import sqlite3
 import xml.etree.ElementTree as ET
+from classify_image import classify_image
 
 
 class config:
@@ -50,12 +51,12 @@ class speach:
             ls.append("None")
         return ls
 
-    def replace_attrs(self, t, f):
+    def __replace_attrs(self, t, f):
         for i in f:
             t = t.replace(i, f[i])
         return t
 
-    def is_unknown_attr(self, f):
+    def __is_unknown_attr(self, f):
         if len(f) == 0:
             return False
         for i in f:
@@ -63,27 +64,43 @@ class speach:
                 return True
         return False
 
-    def get_attrs(self, r):
+    def __detected_object_to_answer(self, d):
+        f = 0
+        s = ""
+        for i in d:
+            if f < d[i]:
+                f = d[i]
+                s = i
+        return s
+
+
+    def __get_attrs(self, r):
         l = r.attrib
         ll = {}
         for i in l:
             if i[0] == '_':
                 if l[i] == "name_from_face":
-                    ll[i] = "John" #get_name_from_face()
+                    ll[i] = "John" #get face image from camera and find in DB
+                elif l[i] == "text_from_object":
+                    im = "img" # get image from camera
+                    c_img = classify_image()
+                    ll[i] = self.__detected_object_to_answer(c_img.detect_image(im))
+                else:
+                    ll[i] = ""
         return ll 
 
-    def add_answer_if_exist(self, r):
+    def __add_answer_if_exist(self, r):
         c = db_manager().get_config_object()
         b = False
         for i in r:
             m = i.get('mood')
             if m == c.get_mood_state() or m == "0":
-                ff = self.get_attrs(i)
-                if self.is_unknown_attr(ff):
+                ff = self.__get_attrs(i)
+                if self.__is_unknown_attr(ff):
                     continue
                 for j in i:
                     if j.tag == "answer":
-                        txt = self.replace_attrs(j.text, ff)
+                        txt = self.__replace_attrs(j.text, ff)
                         self.answer += txt + " "
                         b = True
                     if j.tag == "mood":
@@ -93,8 +110,8 @@ class speach:
 
 
     def find_answer(self, r, index = 0):
-        if r.tag == self.question[index]:
-            if True == self.add_answer_if_exist(r):
+        if index < len(self.question) and r.tag == self.question[index]:
+            if True == self.__add_answer_if_exist(r):
                 del self.question[0:index + 1]
             else:
                 for i in r:
