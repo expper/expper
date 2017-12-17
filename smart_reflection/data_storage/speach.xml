@@ -53,4 +53,19 @@
 		    </default_mood>
 	    </this>
     </what>
+
+    <location type="text">
+		    <default_mood type="answer_text" mood="0" _text="find_location">
+			    <answer>Founded location is _text</answer>
+		    </default_mood>
+    </location>
+
+    <tell type="text">
+		    <default_mood type="answer_text" mood="0" _text="wiki_search">
+			    <answer> _text </answer>
+		    </default_mood>
+    </tell>
+
 </speach>
+
+

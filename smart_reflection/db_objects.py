@@ -1,6 +1,8 @@
 import re
 import sqlite3
+import wikipedia
 import xml.etree.ElementTree as ET
+from location import location
 from classify_image import classify_image
 
 
@@ -30,22 +32,42 @@ class speach:
         self.question = ""
 
     def get_taged_string(self, l):
+        self.current_question = re.sub(r'[^\w]', ' ', self.current_question).lower()
         l = re.sub(r'[^\w]', ' ', l).lower().split(" ")
         tg = db_manager().get_tags_object().get_tags()
         index = 0
         ls = list()
         for i in l:
-            t = tg.get(i)
-            if t != None:
-                ls.append(t)
-            elif index + 1 < len(l):
+            if index + 3 < len(l):
+                t = tg.get(l[index] + "_" + l[index + 1] + "_" + l[index + 2] + "_" + l[index + 3])
+                if t != None:
+                    ls.append(t)
+                    r = l[index] + " " + l[index + 1] + " " + l[index + 2] + " " + l[index + 3] + " "
+                    self.current_question = self.current_question.replace(r, "")
+                    index += 4
+                    continue
+            if index + 2 < len(l):
+                t = tg.get(l[index] + "_" + l[index + 1] + "_" + l[index + 2])
+                if t != None:
+                    ls.append(t)
+                    r = l[index] + " " + l[index + 1] + " " + l[index + 2] + " "
+                    self.current_question = self.current_question.replace(r, "")
+                    index += 3
+                    continue
+            if index + 1 < len(l):
                 t = tg.get(l[index] + "_" + l[index + 1])
                 if t != None:
                     ls.append(t)
-                elif index + 2 < len(l):
-                    t = tg.get(l[index] + "_" + l[index + 1] + "_" + l[index + 2])
-                    if t != None:
-                        ls.append(t)
+                    r = l[index] + " " + l[index + 1] + " "
+                    self.current_question = self.current_question.replace(r, "")
+                    index += 2
+                    continue
+            if index < len(l):
+                t = tg.get(l[index])
+                if t != None:
+                    ls.append(t)
+                    r = l[index] + " "
+                    self.current_question = self.current_question.replace(r, "")
             index += 1
         if len(ls) == 0:
             ls.append("None")
@@ -73,6 +95,19 @@ class speach:
                 s = i
         return s
 
+    def __wiki_search(self):
+        ny = wikipedia.page(self.current_question)
+        n = ny.content
+        s = ""
+        b = False
+        for i in n:
+            if i == '=':
+                break
+            if b == True:
+                s += i
+            elif i == '.':
+                b = True
+        return s
 
     def __get_attrs(self, r):
         l = r.attrib
@@ -85,6 +120,14 @@ class speach:
                     im = "img" # get image from camera
                     c_img = classify_image()
                     ll[i] = self.__detected_object_to_answer(c_img.detect_image(im))
+                elif l[i] == "find_location":
+                    loc = location()
+                    ll[i] = str(loc.find_location_for(self.current_question))
+                elif l[i] == "wiki_search":
+                    try:
+                        ll[i] = self.__wiki_search()
+                    except:
+                        ll[i] = ""
                 else:
                     ll[i] = ""
         return ll 
@@ -117,8 +160,8 @@ class speach:
                 for i in r:
                     self.find_answer(i, index + 1)
 
-
     def get_answer(self, s):
+        self.current_question = s
         self.question = self.get_taged_string(s)
         self.answer = ""
         for i in self.roots:

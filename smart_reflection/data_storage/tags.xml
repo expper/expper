@@ -12,5 +12,22 @@
 	<what_is type="answer_category">what</what_is>
 	<whats type="answer_category">what</whats>
 	<this type="answer_category">this</this>
+	<where type="answer_category">location</where>
+
+	<where type="answer_category">location</where>
+	<where_is type="answer_category">location</where_is>
+
+	<location type="answer_category">location</location>
+	<location_of type="answer_category">location</location_of>
+
+	<find_location type="answer_category">location</find_location>
+	<find_location_of type="answer_category">location</find_location_of>
+
+	<where_location type="answer_category">location</where_location>
+	<where_location_of type="answer_category">location</where_location_of>
+	<where_is_location_of type="answer_category">location</where_is_location_of>
+
+	<tell type="answer_category">tell</tell>
+	<tell_about type="answer_category">tell</tell_about>
 
 </tags>

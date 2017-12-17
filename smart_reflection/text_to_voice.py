@@ -1,14 +1,13 @@
-import pyttsx
+import os
+import re
 
 class text_to_voice:
 
-    def __init__(self):
-        self.__m_engine = pyttsx.init()
 
     def to_voice(self, s):
-        #self.__m_engine.say(s)
-        #self.__m_engine.runAndWait()
+        #s = re.sub(r'[^\w]', ' ', s)
         print("ANSWER--> ", s)
+        os.system("google_speech -l en \"" + s + "\"")  
 
 
 
