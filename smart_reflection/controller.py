@@ -3,6 +3,7 @@ import random
 from classify_image import classify_image
 from enum import Enum
 from db_objects import *
+from location import location
 from helper_objects import time_comparator
 from abstract_objects import *
 from voic_detection import voic_detection
@@ -27,8 +28,7 @@ class controller(metaclass=Singleton):
 
     def __init__(self, p):
         print(':Starting:')
-        self.__classify_img = classify_image()
-        #print(self.__classify_img.detect_image('img'))
+        #print(location().find_location_for('opera, Yerevan, Armenia'))
         self.time_cmp = time_comparator()
         self.db_manager = db_manager(db_name)
         self.__current_state = base_state.STARTING
