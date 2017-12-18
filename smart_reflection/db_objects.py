@@ -1,7 +1,10 @@
 import re
+import os
 import sqlite3
 import wikipedia
 import xml.etree.ElementTree as ET
+import numpy as np
+import cv2
 from location import location
 from classify_image import classify_image
 
@@ -95,6 +98,14 @@ class speach:
                 s = i
         return s
 
+    def __get_path_of_image(self):
+        cap = cv2.VideoCapture(0)
+        ret, frame = cap.read()
+        cv2.imwrite("pt.png", frame)
+        cap.release()
+        cv2.destroyAllWindows()
+        return "pt.png"
+
     def __wiki_search(self):
         ny = wikipedia.page(self.current_question)
         n = ny.content
@@ -117,9 +128,10 @@ class speach:
                 if l[i] == "name_from_face":
                     ll[i] = "John" #get face image from camera and find in DB
                 elif l[i] == "text_from_object":
-                    im = "img" # get image from camera
                     c_img = classify_image()
-                    ll[i] = self.__detected_object_to_answer(c_img.detect_image(im))
+                    path = self.__get_path_of_image()
+                    ll[i] = self.__detected_object_to_answer(c_img.detect_image(path))
+                    os.remove(path)
                 elif l[i] == "find_location":
                     loc = location()
                     ll[i] = str(loc.find_location_for(self.current_question))
