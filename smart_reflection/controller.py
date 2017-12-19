@@ -34,6 +34,7 @@ class controller(metaclass=Singleton):
         self.__current_state = base_state.STARTING
         self.__m_voic_detection = voic_detection()
         self.__run()
+        #self.__run()
 
     def __del__(self):
         print(':Finishing:')

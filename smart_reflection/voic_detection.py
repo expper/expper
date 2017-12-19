@@ -4,7 +4,10 @@ import pyaudio
 class voic_detection:
 
     def get_current_text(self):
+        #return "tell about Yerevan"
         return "what is this"
+        #return "where is los angeles"
+        #return "hello how are you"
         # Record Audio
         self.m_rec = sr.Recognizer()
         with sr.Microphone() as source:

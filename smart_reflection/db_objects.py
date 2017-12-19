@@ -1,7 +1,7 @@
 import re
 import os
 import sqlite3
-import wikipedia
+import wikipediaapi
 import xml.etree.ElementTree as ET
 import numpy as np
 import cv2
@@ -34,44 +34,35 @@ class speach:
         self.answer = ""
         self.question = ""
 
+    def __detect_teg(self, l, ls, index, k):
+        if k < len(l):
+            tg = db_manager().get_tags_object().get_tags()
+            t = ""
+            r = ""
+            for i in range(index, k + 1):
+                _t1 = "" if i == k else "_"
+                _t2 = "" if i == k else " "
+                t += l[i] + _t1
+                r += l[i] + _t2
+            t = tg.get(t)
+            if t != None:
+                ls.append(t)
+                self.current_question = self.current_question.replace(r, "")
+                return True
+        return False
+
+
     def get_taged_string(self, l):
         self.current_question = re.sub(r'[^\w]', ' ', self.current_question).lower()
         l = re.sub(r'[^\w]', ' ', l).lower().split(" ")
         tg = db_manager().get_tags_object().get_tags()
         index = 0
         ls = list()
-        for i in l:
-            if index + 3 < len(l):
-                t = tg.get(l[index] + "_" + l[index + 1] + "_" + l[index + 2] + "_" + l[index + 3])
-                if t != None:
-                    ls.append(t)
-                    r = l[index] + " " + l[index + 1] + " " + l[index + 2] + " " + l[index + 3] + " "
-                    self.current_question = self.current_question.replace(r, "")
-                    index += 4
-                    continue
-            if index + 2 < len(l):
-                t = tg.get(l[index] + "_" + l[index + 1] + "_" + l[index + 2])
-                if t != None:
-                    ls.append(t)
-                    r = l[index] + " " + l[index + 1] + " " + l[index + 2] + " "
-                    self.current_question = self.current_question.replace(r, "")
-                    index += 3
-                    continue
-            if index + 1 < len(l):
-                t = tg.get(l[index] + "_" + l[index + 1])
-                if t != None:
-                    ls.append(t)
-                    r = l[index] + " " + l[index + 1] + " "
-                    self.current_question = self.current_question.replace(r, "")
-                    index += 2
-                    continue
-            if index < len(l):
-                t = tg.get(l[index])
-                if t != None:
-                    ls.append(t)
-                    r = l[index] + " "
-                    self.current_question = self.current_question.replace(r, "")
-            index += 1
+        for i in range(0, len(l)):
+            for j in range(len(l) - 1, i - 1, -1):
+                k = self.__detect_teg(l, ls, i, j)
+                if k == True:
+                    break
         if len(ls) == 0:
             ls.append("None")
         return ls
@@ -107,17 +98,11 @@ class speach:
         return "pt.png"
 
     def __wiki_search(self):
-        ny = wikipedia.page(self.current_question)
-        n = ny.content
-        s = ""
-        b = False
-        for i in n:
-            if i == '=':
-                break
-            if b == True:
-                s += i
-            elif i == '.':
-                b = True
+        wiki_wiki = wikipediaapi.Wikipedia('en')
+        page_py = wiki_wiki.page(self.current_question)
+        s = page_py.summary
+        s = re.sub(r'\(.*\)', ' ', s)
+        s = re.sub(r'\".*\"', ' ', s)
         return s
 
     def __get_attrs(self, r):
