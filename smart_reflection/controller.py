@@ -6,7 +6,7 @@ from db_objects import *
 from location import location
 from helper_objects import time_comparator
 from abstract_objects import *
-from voic_detection import voic_detection
+from voice_detection import voice_detection
 
 class base_state(Enum):
     UNKNOWN = 0
@@ -32,7 +32,7 @@ class controller(metaclass=Singleton):
         self.time_cmp = time_comparator()
         self.db_manager = db_manager(db_name)
         self.__current_state = base_state.STARTING
-        self.__m_voic_detection = voic_detection()
+        self.__m_voice_detection = voice_detection()
         self.__run()
         #self.__run()
 
@@ -47,7 +47,7 @@ class controller(metaclass=Singleton):
 
     def get_input_objects(self):
         l = list();
-        s = self.__m_voic_detection.get_current_text()
+        s = self.__m_voice_detection.get_text()
         if s != "":
             print("Question--> ", s)
             l.append(input_voice(s))
@@ -72,20 +72,23 @@ class controller(metaclass=Singleton):
     def __run(self):
         print(':Running:')
         self.__set_current_state(base_state.RUNNING)
-        #while True:
-        l = self.get_input_objects();
-        if len(l) != 0:
-            l = self.to_outputs(l)
-            self.process_outputs(l)
-            self.time_cmp.update()
-
-
+        while True:
+            try:
+                l = self.get_input_objects()
+                if len(l) != 0:
+                    l = self.to_outputs(l)
+                    self.process_outputs(l)
+                    self.time_cmp.update()
+            except:
+                print("ERRRORRRR")
 
 if __name__ == "__main__":
     db_name = sys.argv[1]
-    #try:
     controller(db_name)
-    #except:
+    #while True:
+     #   try:
+      #      controller(db_name)
+      #  except:
 
 
 
