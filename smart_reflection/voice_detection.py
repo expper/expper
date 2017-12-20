@@ -23,6 +23,7 @@ class voice_detection(object):
     def __init__(self):
         # See http://g.co/cloud/speech/docs/languages
         # for a list of supported languages.
+        self.enabled = False
         self.language_code = 'en-US'  # a BCP-47 language tag
 
         self.client = speech.SpeechClient()
@@ -155,4 +156,12 @@ class voice_detection(object):
                 num_chars_printed = len(transcript)
 
             else:
-                return (transcript + overwrite_chars)
+                s = (transcript + overwrite_chars)
+                print("---- ", s)
+                if self.enabled == True:
+                    self.enabled = False
+                    return s
+                if s.find("Robin") >= 0 or s.find("robin") >= 0:
+                    print("DETECT ROBIN")
+                    self.enabled = True
+                return ""

@@ -104,8 +104,12 @@ class speach:
         wiki_wiki = wikipediaapi.Wikipedia('en')
         page_py = wiki_wiki.page(self.current_question)
         s = page_py.summary
-        s = re.sub(r'\(.*\)', ' ', s)
-        s = re.sub(r'\".*\"', ' ', s)
+        s = re.sub(r'\(.+\)', ' ', s)
+        s = re.sub(r'\".+\"', ' ', s)
+        #s = re.sub(r'\ .\..\..\.', ' ', s)
+        r = s.split(".")
+        if len(r) >= 3:
+            s = r[0] + "." + r[1] + "." + r[2] + "."
         return s
 
     def __get_attrs(self, r):
@@ -119,7 +123,7 @@ class speach:
                     c_img = classify_image()
                     path = self.__get_path_of_image()
                     ll[i] = self.__detected_object_to_answer(c_img.detect_image(path))
-                    #os.remove(path)
+                    os.remove(path)
                 elif l[i] == "find_location":
                     loc = location()
                     ll[i] = str(loc.find_location_for(self.current_question))

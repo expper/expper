@@ -28,6 +28,11 @@
 	<where_is_location_of type="answer_category">location</where_is_location_of>
 
 	<tell type="answer_category">tell</tell>
+	<tell_me type="answer_category">tell</tell_me>
+	<tell_me_about type="answer_category">tell</tell_me_about>
 	<tell_about type="answer_category">tell</tell_about>
+
+	<who type="answer_category">tell_who</who>
+	<who_is type="answer_category">tell_who</who_is>
 
 </tags>

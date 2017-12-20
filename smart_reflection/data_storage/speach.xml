@@ -70,6 +70,17 @@
 		    </default_mood>
     </tell>
 
+    <tell_who type="text">
+		    <default_mood type="answer_text" mood="0" _text="wiki_search">
+			    <answer> According wikipedia _text </answer>
+		    </default_mood>
+		    <you type="text">
+			    <default_mood type="answer_text" mood="0">
+				    <answer>I am an intelligent robot, created by expper technologies</answer>
+			    </default_mood>
+		    </you>
+    </tell_who>
+
 </speach>
 
 

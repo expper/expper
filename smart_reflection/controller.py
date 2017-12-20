@@ -51,12 +51,12 @@ class controller(metaclass=Singleton):
         if s != "":
             print("Question--> ", s)
             l.append(input_voice(s))
-        elif self.time_cmp.get_time_diff_M() > 5:
-            p = self.db_manager.get_phrase_object()
-            ll = p.find_phrases()
-            if len(ll) > 0:
-                idx = random.randint(0, len(ll) - 1)
-                l.append(input_phrase(ll[idx]))
+        #elif self.time_cmp.get_time_diff_M() > 5:
+        #    p = self.db_manager.get_phrase_object()
+        #    ll = p.find_phrases()
+        #    if len(ll) > 0:
+        #        idx = random.randint(0, len(ll) - 1)
+        #        l.append(input_phrase(ll[idx]))
         return l
 
     def to_outputs(self, l):
