@@ -1,25 +1,25 @@
 import re
 import os
 import sqlite3
-import wikipediaapi
+import wikipedia
 import xml.etree.ElementTree as ET
 import numpy as np
 import cv2
 from location import location
 from classify_image import classify_image
-from object_recognition import capture
+#from object_recognition import capture
 
 
 class config:
     def __init__(self, r): 
         self.root = r
-        self.mood = self.root.find('mood')
+        self.EMOTION = self.root.find('EMOTION')
 
-    def get_mood_state(self):
-        return self.mood.text
+    def get_EMOTION_state(self):
+        return self.EMOTION.text
 
-    def set_mood_state(self, s):
-        self.mood.text = s
+    def set_EMOTION_state(self, s):
+        self.EMOTION.text = s
 
     def get_state(self, k):
         return self.root.find(k).text
@@ -91,25 +91,29 @@ class speach:
         return s
 
     def __get_path_of_image(self):
-        ss = capture()
-        return ss.get_path()
-        #cap = cv2.VideoCapture(1)
-        #ret, frame = cap.read()
-        #cv2.imwrite("pt.png", frame)
-        #cap.release()
-        #cv2.destroyAllWindows()
-        #return "pt.png"
+        #ss = capture()
+        #return ss.get_path()
+        cap = cv2.VideoCapture(1)
+        ret, frame = cap.read()
+        cv2.imwrite("pt.png", frame)
+        cap.release()
+        cv2.destroyAllWindows()
+        return "pt.png"
 
-    def __wiki_search(self):
-        wiki_wiki = wikipediaapi.Wikipedia('en')
-        page_py = wiki_wiki.page(self.current_question)
-        s = page_py.summary
+    def __wiki_full_search(self):
+        s = wikipedia.page(self.current_questionr)
         s = re.sub(r'\(.+\)', ' ', s)
         s = re.sub(r'\".+\"', ' ', s)
-        #s = re.sub(r'\ .\..\..\.', ' ', s)
-        r = s.split(".")
-        if len(r) >= 3:
-            s = r[0] + "." + r[1] + "." + r[2] + "."
+        return s
+    def __wiki_summary_search(self):
+        s = wikipedia.summary(self.current_questionr)
+        s = re.sub(r'\(.+\)', ' ', s)
+        s = re.sub(r'\".+\"', ' ', s)
+        return s
+    def __wiki_search(self):
+        s = wikipedia.summary(self.current_question, sentences=1)
+        s = re.sub(r'\(.+\)', ' ', s)
+        s = re.sub(r'\".+\"', ' ', s)
         return s
 
     def __get_attrs(self, r):
@@ -117,22 +121,26 @@ class speach:
         ll = {}
         for i in l:
             if i[0] == '_':
-                if l[i] == "name_from_face":
-                    ll[i] = "John" #get face image from camera and find in DB
-                elif l[i] == "text_from_object":
-                    c_img = classify_image()
-                    path = self.__get_path_of_image()
-                    ll[i] = self.__detected_object_to_answer(c_img.detect_image(path))
-                    os.remove(path)
-                elif l[i] == "find_location":
-                    loc = location()
-                    ll[i] = str(loc.find_location_for(self.current_question))
-                elif l[i] == "wiki_search":
-                    try:
+                try:
+                    if l[i] == "_NAME_FROM_FACE":
+                        ll[i] = "John" #get face image from camera and find in DB
+                    elif l[i] == "_TEXT_FROM_OBJECT":
+                        c_img = classify_image()
+                        path = self.__get_path_of_image()
+                        ll[i] = self.__detected_object_to_answer(c_img.detect_image(path))
+                        os.remove(path)
+                    elif l[i] == "_FIND_LOCATION":
+                        loc = location()
+                        ll[i] = str(loc.find_location_for(self.current_question))
+                    elif l[i] == "_WIKI_SEARCH":
                         ll[i] = self.__wiki_search()
-                    except:
+                    elif l[i] == "_WIKI_SUMMARY_SEARCH":
+                        ll[i] = self.__wiki_summary_search()
+                    elif l[i] == "_WIKI_FULL_SEARCH":
+                        ll[i] = self.__wiki_full_search()
+                    else:
                         ll[i] = ""
-                else:
+                except:
                     ll[i] = ""
         return ll 
 
@@ -140,8 +148,8 @@ class speach:
         c = db_manager().get_config_object()
         b = False
         for i in r:
-            m = i.get('mood')
-            if m == c.get_mood_state() or m == "0":
+            m = i.get('EMOTION')
+            if m == c.get_EMOTION_state() or m == "0":
                 ff = self.__get_attrs(i)
                 if self.__is_unknown_attr(ff):
                     continue
@@ -150,8 +158,8 @@ class speach:
                         txt = self.__replace_attrs(j.text, ff)
                         self.answer += txt + " "
                         b = True
-                    if j.tag == "mood":
-                        c.set_mood_state(j.text)
+                    if j.tag == "EMOTION":
+                        c.set_EMOTION_state(j.text)
                 break
         return b
 
@@ -193,8 +201,8 @@ class phrase:
         c = db_manager().get_config_object()
         l = list()
         for i in self.root:
-            m = i.get('mood')
-            if m == c.get_mood_state() or m == "0":
+            m = i.get('EMOTION')
+            if m == c.get_EMOTION_state() or m == "0":
                 l.append(i.text)
         return l
 

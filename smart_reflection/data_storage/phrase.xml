@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <phrase>
-	<medium_phrase type="phrase_text" mood="3">I am fill good</medium_phrase>
-	<medium_phrase type="phrase_text" mood="3">I am fill nice</medium_phrase>
-	<angry_phrase type="phrase_text" mood="1">I am very angry</angry_phrase>
-	<happy_phrase type="phrase_text" mood="5">I am very happy</happy_phrase>	
+	<medium_phrase EMOTION="3">I am fill good</medium_phrase>
+	<medium_phrase EMOTION="3">I am fill nice</medium_phrase>
+	<angry_phrase EMOTION="1">I am very angry</angry_phrase>
+	<happy_phrase EMOTION="5">I am very happy</happy_phrase>	
 </phrase>

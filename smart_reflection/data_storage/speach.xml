@@ -1,85 +1,72 @@
 <?xml version="1.0"?>
 <speach>
-    <greet type="text">
-	    <happy_mood type="answer_text" mood="5">
-		    <answer>Hi, I am happy to see you</answer>
-	    </happy_mood>
-	    <medium_mood type="answer_text" mood="3">
-		    <answer>Hello</answer>
-		    <mood>4</mood>
-	    </medium_mood>
-	    <angry_mod type="answer_text" mood="1">
-		    <answer>Hi and by</answer>
-		    <mood>3</mood>
-	    </angry_mod>
-	    <default_mood type="answer_text" mood="4">
-		    <answer>Good day</answer>
-	    </default_mood>
-	    <default_mood type="answer_text" mood="0">
-		    <answer>Hello how can I help you</answer>
-		    <mood>3</mood>
-	    </default_mood>
-    </greet>
-    <how type="text">
-	    <you type="text">
-		    <happy_mood type="answer_text" mood="5" _name="name_from_face">
-			    <answer>I fill fantastic _name, thank you</answer>
-		    </happy_mood>
-		    <happy_mood type="answer_text" mood="4">
-			    <answer>I am very happy, thanks</answer>
-			    <mood>5</mood>
-		    </happy_mood>
-		    <medium_mood type="answer_text" mood="3">
-			    <answer>Not bad thank you</answer>
-			    <mood>5</mood>
-		    </medium_mood>
-		    <angry_mod type="answer_text" mood="1">
-			    <answer>I am very angry</answer>
-			    <mood>3</mood>
-		    </angry_mod>
-		    <default_mood type="answer_text" mood="0">
-			    <answer>Thanks I am good</answer>
-			    <mood>3</mood>
-		    </default_mood>
-	    </you>
-    </how>
-    <what type="text">
-	    <you type="text">
-		    <name type="text">
-			    <default_mood type="answer_text" mood="0">
-				    <answer>My name is Heros</answer>
-			    </default_mood>
-		    </name>
-	    </you>
-	    <this type="text">
-		    <default_mood type="answer_text" mood="0" _text="text_from_object">
-			    <answer>This is _text</answer>
-		    </default_mood>
-	    </this>
-    </what>
+	<greet>
+		<answer_text EMOTION="5">
+			<answer>Hi, I am happy to see you</answer>
+		</answer_text>
+		<answer_text EMOTION="3">
+			<answer>Hello</answer>
+			<EMOTION>4</EMOTION>
+		</answer_text>
+		<answer_text EMOTION="1">
+			<answer>Hi and by</answer>
+			<EMOTION>3</EMOTION>
+		</answer_text>
+		<answer_text EMOTION="4">
+			<answer>Good day</answer>
+		</answer_text>
+		<answer_text EMOTION="0">
+			<answer>Hello how can I help you</answer>
+		</answer_text>
+	</greet>
+	<how>
+		<you>
+			<answer_text EMOTION="5" _name="_NAME_FROM_FACE">
+				<answer>I fill fantastic _name, thank you</answer>
+			</answer_text>
+			<answer_text EMOTION="4">
+				<answer>I am very happy, thanks</answer>
+				<EMOTION>5</EMOTION>
+			</answer_text>
+			<answer_text EMOTION="3">
+				<answer>Not bad thank you</answer>
+				<EMOTION>5</EMOTION>
+			</answer_text>
+			<answer_text EMOTION="1">
+				<answer>I am very angry</answer>
+				<EMOTION>3</EMOTION>
+			</answer_text>
+			<answer_text EMOTION="0">
+				<answer>Thanks I am good</answer>
+			</answer_text>
+		</you>
+	</how>
+	<what>
+		<you>
+			<name>
+				<answer_text EMOTION="0">
+					<answer>My name is Heros</answer>
+				</answer_text>
+			</name>
+		</you>
+		<this>
+			<answer_text EMOTION="0" _text="_TEXT_FROM_OBJECT">
+				<answer>This is _TEXT</answer>
+			</answer_text>
+		</this>
+	</what>
 
-    <location type="text">
-		    <default_mood type="answer_text" mood="0" _text="find_location">
-			    <answer>Founded location is _text</answer>
-		    </default_mood>
-    </location>
+	<location>
+		<answer_text EMOTION="0" _location="_FIND_LOCATION">
+			<answer>Founded location is _location</answer>
+		</answer_text>
+	</location>
 
-    <tell type="text">
-		    <default_mood type="answer_text" mood="0" _text="wiki_search">
-			    <answer> _text </answer>
-		    </default_mood>
-    </tell>
-
-    <tell_who type="text">
-		    <default_mood type="answer_text" mood="0" _text="wiki_search">
-			    <answer> According wikipedia _text </answer>
-		    </default_mood>
-		    <you type="text">
-			    <default_mood type="answer_text" mood="0">
-				    <answer>I am an intelligent robot, created by expper technologies</answer>
-			    </default_mood>
-		    </you>
-    </tell_who>
+	<tell>
+		<answer_text EMOTION="0" _wiki="_WIKI_SEARCH">
+			<answer>According wikipedia _wiki</answer>
+		</answer_text>
+	</tell>
 
 </speach>
 
