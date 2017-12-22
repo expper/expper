@@ -23,7 +23,7 @@ for i in c.execute('SELECT * FROM config'):
     print_all(root)
     print("--------------")
 print("===========")
-for i in c.execute('SELECT * FROM speach'):
+for i in c.execute('SELECT * FROM speech'):
     root = ET.fromstring(i[0])
     print(root.tag, root.text)
     print_all(root)

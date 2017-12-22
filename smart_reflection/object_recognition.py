@@ -1,9 +1,39 @@
-import io
-import picamera
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+#import io
+#import picamera
+import os
 import cv2
 import numpy
+from classify_image import classify_image
 
-class capture(object):
+class object_recognition(object):
+
+    def __detected_object_to_answer(self, d):
+        f = 0
+        s = ""
+        for i in d:
+            if f < d[i]:
+                f = d[i]
+                s = i
+        return s
+
+    def detect_image(self):
+        c_img = classify_image()
+        cap = cv2.VideoCapture(0)
+        ret, frame = cap.read()
+        path = "pt.png"
+        cv2.imwrite(path, frame)
+        cap.release()
+        cv2.destroyAllWindows()
+        s = self.__detected_object_to_answer(c_img.detect_image(path))
+        print(s)
+        os.remove(path)
+        return s
+
+'''class capture(object):
     def __init__(self):
         self.stream = io.BytesIO()
         self.camera = picamera.PiCamera()
@@ -61,6 +91,7 @@ class face_detection(object):
         #Save the result image
         cv2.imwrite(fileName,self.image)
 
+'''
 
 
 

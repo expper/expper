@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<speach>
+<speech>
 	<greet>
 		<answer_text EMOTION="5">
 			<answer>Hi, I am happy to see you</answer>
@@ -50,7 +50,7 @@
 			</name>
 		</you>
 		<this>
-			<answer_text EMOTION="0" _text="_TEXT_FROM_OBJECT">
+			<answer_text EMOTION="0" _TEXT="_TEXT_FROM_OBJECT">
 				<answer>This is _TEXT</answer>
 			</answer_text>
 		</this>
@@ -68,6 +68,6 @@
 		</answer_text>
 	</tell>
 
-</speach>
+</speech>
 
 

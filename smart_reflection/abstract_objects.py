@@ -1,3 +1,7 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 from enum import Enum
 from db_objects import *
 from text_to_voice import text_to_voice
@@ -61,7 +65,7 @@ class input_voice(input_object):
         return self.__m_text
 
     def to_output_object(self):
-        sp = db_manager().get_speach_object()
+        sp = db_manager().get_speech_object()
         txt = sp.get_answer(self.__m_text)
         return output_voice(txt)
             

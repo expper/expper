@@ -14,7 +14,7 @@ def create_and_insert_to_db(c, xml_path):
 	# Create table with name XML root object
 	c.execute('''CREATE TABLE ''' + root.tag + ''' (xml_line text)''')
 
-	if root.tag != 'speach':
+	if root.tag != 'speech':
 		# Convert XML hierarchy to string
 		x = ET.tostring(root, encoding='utf8', method='xml').decode(encoding='utf8').replace('\'', '\"')
 		c.execute("INSERT INTO " + root.tag + " VALUES ('" + x + "')")
@@ -35,7 +35,7 @@ conn = sqlite3.connect(db_path)
 c = conn.cursor()
 
 create_and_insert_to_db(c, "config.xml")
-create_and_insert_to_db(c, "speach.xml")
+create_and_insert_to_db(c, "speech.xml")
 create_and_insert_to_db(c, "tags.xml")
 create_and_insert_to_db(c, "phrase.xml")
 
