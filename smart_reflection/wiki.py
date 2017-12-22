@@ -20,7 +20,7 @@ class wiki():
         s = wikipedia.summary(q, sentences=1)
         if len(s) < 30:
             s = wikipedia.summary(q, sentences=2)
-            if len(s) < 40:
+            if len(s) < 45:
                 s = wikipedia.summary(q, sentences=3)
         s = re.sub(r'\(.+\)', ' ', s)
         s = re.sub(r'\".+\"', ' ', s)
