@@ -6,6 +6,7 @@ import re
 from location import location
 from wiki import wiki
 from object_recognition import object_recognition
+from transaction import speech_transaction
 
 class speech:
     def __init__(self, r, t, c):
@@ -14,6 +15,7 @@ class speech:
         self.roots = r
         self.answer = ""
         self.question = ""
+        self.transacrion = speech_transaction()
 
     def __detect_teg(self, l, ls, index, k):
         if k < len(l):
@@ -44,6 +46,13 @@ class speech:
                 k = self.__detect_teg(l, ls, i, j)
                 if k == True:
                     break
+        for i in range(0, len(ls)):
+            if ls[i] == "relate":
+                d = self.transacrion.get_last_speech()
+                if d != "":
+                    ls[i] = ""
+                    self.current_question = d
+
         if len(ls) == 0:
             ls.append("None")
         return ls
@@ -122,5 +131,6 @@ class speech:
             if len(self.question) == 0:
                 break
         self.question = ""
+        self.transacrion.update(self.current_question)
         return self.answer
 

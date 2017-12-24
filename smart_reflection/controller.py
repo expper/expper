@@ -8,7 +8,7 @@ from classify_image import classify_image
 from enum import Enum
 from db_objects import *
 from location import location
-from helper_objects import time_comparator
+from helper_objects import time_
 from abstract_objects import *
 from voice_detection import voice_detection
 
@@ -33,10 +33,10 @@ class controller(metaclass=Singleton):
     def __init__(self, p):
         print(':Starting:')
         #print(location().find_location_for('opera, Yerevan, Armenia'))
-        self.time_cmp = time_comparator()
+        self.time_cmp = time_()
         self.db_manager = db_manager(db_name)
         self.__current_state = base_state.STARTING
-        self.__m_voice_detection = voice_detection()
+        self.__m_voice_detection = voice_detection(self.db_manager.get_config_object().get_NAME())
         self.__run()
         #self.__run()
 

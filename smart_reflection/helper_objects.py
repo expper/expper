@@ -6,7 +6,7 @@ import datetime
 #from time import sleep
 
 
-class time_comparator:
+class time_:
 
     def __init__(self):
         self.update()

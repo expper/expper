@@ -8,12 +8,19 @@ class config:
     def __init__(self, r): 
         self.root = r
         self.EMOTION = self.root.find('EMOTION')
+        self.NAME = self.root.find('NAME')
 
     def get_EMOTION_state(self):
         return self.EMOTION.text
 
     def set_EMOTION_state(self, s):
         self.EMOTION.text = s
+
+    def get_NAME(self):
+        return self.NAME.text
+
+    def set_NAME(self, s):
+        self.NAME.text = s
 
     def get_state(self, k):
         return self.root.find(k).text

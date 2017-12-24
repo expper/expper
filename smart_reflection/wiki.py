@@ -17,6 +17,7 @@ class wiki():
         s = re.sub(r'\".+\"', ' ', s)
         return s
     def wiki_search(self, q):
+        print(q)
         s = wikipedia.summary(q, sentences=1)
         if len(s) < 30:
             s = wikipedia.summary(q, sentences=2)

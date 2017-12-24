@@ -13,6 +13,7 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
+from transaction import speech_transaction
 # [END import_libraries]
 
 # Audio recording parameters
@@ -21,6 +22,9 @@ CHUNK = int(RATE / 10)  # 100ms
 DEVICE_NUMBER=3;
 
 class voice_detection(object):
+    def __init__(self, n):
+        self.name = n
+        self.index = 0
     #def __init__(self):
       # # See http://g.co/cloud/speech/docs/languages
       # # for a list of supported languages.
@@ -34,9 +38,22 @@ class voice_detection(object):
       #     sample_rate_hertz=RATE,
       #     language_code=self.language_code)
     def get_text(self):
-        print("Type question: ")
-        name = input("Enter a name: ")
-        return name
+        nm = input("Enter a name: ")
+        print(nm, self.name, self.index)
+        print(speech_transaction().get_last_speech())
+        if -1 != nm.lower().find(self.name):
+            speech_transaction().update("")
+            self.index = 1
+            print("aaa")
+            return ""
+        if self.index == 0:
+            return ""
+        if self.index > 1 and speech_transaction().get_last_speech() == "":
+            self.index = 0
+            return ""
+        if self.index == 1:
+            self.index = 2
+        return nm
         
 
         #
