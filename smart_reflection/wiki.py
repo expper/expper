@@ -11,11 +11,13 @@ class wiki():
         s = re.sub(r'\(.+\)', ' ', s)
         s = re.sub(r'\".+\"', ' ', s)
         return s
+
     def wiki_summary_search(self, q):
         s = wikipedia.summary(q)
         s = re.sub(r'\(.+\)', ' ', s)
         s = re.sub(r'\".+\"', ' ', s)
         return s
+
     def wiki_search(self, q):
         print(q)
         s = wikipedia.summary(q, sentences=1)
