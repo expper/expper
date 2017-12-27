@@ -84,6 +84,16 @@ sudo ldconfig
 pip3 install tensorflow
 pip3 install GoogleMaps
 pip3 install wikipedia
+pip3 install SpeechRecognition
+dnf install python3-pyaudio
+dnf install portaudio-devel
+dnf install python3-devel.x86_64 python3-devel.i686 boost-python3-devel.x86_64 boost-python3-devel.i686
+pip3 install --upgrade PyAudio
+pip install --upgrade google-cloud-speech
+https://cloud.google.com/speech/docs/streaming-recognize
 
+https://pypi.python.org/pypi/google_speech/
+dnf install sox
+pip3 install --upgrade google-cloud-speech
 
 
