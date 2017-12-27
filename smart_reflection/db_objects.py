@@ -38,7 +38,7 @@ class db_manager(metaclass=Singleton):
     def __get_xml(self, s):
         r = list()
         for i in self.cursor.execute("SELECT * FROM " + s ):
-                r.append(ET.fromstring(i[0]))
+                r.append(ET.fromstring(i[1]))
         return r
 
     def __get_config_object_from_db(self):
@@ -47,7 +47,7 @@ class db_manager(metaclass=Singleton):
 
     def __get_speech_object_from_db(self):
         r = self.__get_xml('speech')
-        return speech(r, self.tags, self.config)
+        return speech(r, self.tags, self.config, self.phrase, self)
         
     def __get_tags_object_from_db(self):
         r = self.__get_xml('tags')
@@ -68,3 +68,11 @@ class db_manager(metaclass=Singleton):
 
     def get_phrase_object(self):
         return self.phrase
+
+    def save_speech_learning(self, l):
+        self.cursor.execute("DELETE FROM speech WHERE Tag = 'learning'")
+        x = ET.tostring(l, encoding='utf8', method='xml').decode(encoding='utf8').replace('\'', '\"')
+        print(x)
+        self.cursor.execute("INSERT INTO speech VALUES ('" + l.tag + "', '" + x + "')")
+        self.connection.commit()
+

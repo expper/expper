@@ -1,73 +1,73 @@
 <?xml version="1.0"?>
 <speech>
 	<greet>
-		<answer_text EMOTION="5">
-			<answer>Hi, I am happy to see you</answer>
-		</answer_text>
-		<answer_text EMOTION="3">
-			<answer>Hello</answer>
+		<answer EMOTION="5">
+			<answer_text>Hi, I am happy to see you</answer_text>
+		</answer>
+		<answer EMOTION="3">
+			<answer_text>Hello</answer_text>
 			<EMOTION>4</EMOTION>
-		</answer_text>
-		<answer_text EMOTION="1">
-			<answer>Hi and by</answer>
+		</answer>
+		<answer EMOTION="1">
+			<answer_text>Hi and by</answer_text>
 			<EMOTION>3</EMOTION>
-		</answer_text>
-		<answer_text EMOTION="4">
-			<answer>Good day</answer>
-		</answer_text>
-		<answer_text EMOTION="0">
-			<answer>Hello how can I help you</answer>
-		</answer_text>
+		</answer>
+		<answer EMOTION="4">
+			<answer_text>Good day</answer_text>
+		</answer>
+		<answer EMOTION="0">
+			<answer_text>Hello how can I help you</answer_text>
+		</answer>
 	</greet>
 	<how>
 		<you>
-			<answer_text EMOTION="5" _name="_NAME_FROM_FACE">
-				<answer>I fill fantastic _name, thank you</answer>
-			</answer_text>
-			<answer_text EMOTION="4">
-				<answer>I am very happy, thanks</answer>
+			<answer EMOTION="5" _name="_NAME_FROM_FACE">
+				<answer_text>I fill fantastic _name, thank you</answer_text>
+			</answer>
+			<answer EMOTION="4">
+				<answer_text>I am very happy, thanks</answer_text>
 				<EMOTION>5</EMOTION>
-			</answer_text>
-			<answer_text EMOTION="3">
-				<answer>Not bad thank you</answer>
+			</answer>
+			<answer EMOTION="3">
+				<answer_text>Not bad thank you</answer_text>
 				<EMOTION>5</EMOTION>
-			</answer_text>
-			<answer_text EMOTION="1">
-				<answer>I am very angry</answer>
+			</answer>
+			<answer EMOTION="1">
+				<answer_text>I am very angry</answer_text>
 				<EMOTION>3</EMOTION>
-			</answer_text>
-			<answer_text EMOTION="0">
-				<answer>Thanks I am good</answer>
-			</answer_text>
+			</answer>
+			<answer EMOTION="0">
+				<answer_text>Thanks I am good</answer_text>
+			</answer>
 		</you>
 	</how>
-	<what>
+	<what learning="1">
 		<you>
 			<name>
-				<answer_text EMOTION="0">
-					<answer>My name is Heros</answer>
-				</answer_text>
+				<answer EMOTION="0">
+					<answer_text>My name is Heros</answer_text>
+				</answer>
 			</name>
 		</you>
 		<this>
-			<answer_text EMOTION="0" _TEXT="_TEXT_FROM_OBJECT">
-				<answer>This is _TEXT</answer>
-			</answer_text>
+			<answer EMOTION="0" _TEXT="_TEXT_FROM_OBJECT">
+				<answer_text>This is _TEXT</answer_text>
+			</answer>
 		</this>
 	</what>
 
 	<location>
-		<answer_text EMOTION="0" _location="_FIND_LOCATION">
-			<answer>Founded location is _location</answer>
-		</answer_text>
+		<answer EMOTION="0" _location="_FIND_LOCATION">
+			<answer_text>Founded location is _location</answer_text>
+		</answer>
 	</location>
 
 	<tell>
-		<answer_text EMOTION="0" _wiki="_WIKI_SEARCH">
-			<answer>According wikipedia _wiki</answer>
-		</answer_text>
+		<answer EMOTION="0" _wiki="_WIKI_SEARCH">
+			<answer_text>According wikipedia _wiki</answer_text>
+		</answer>
 	</tell>
+<learning>
+</learning>
 
 </speech>
-
-

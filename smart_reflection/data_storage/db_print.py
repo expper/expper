@@ -18,26 +18,26 @@ db_path = sys.argv[1]
 conn = sqlite3.connect(db_path)
 c = conn.cursor()
 for i in c.execute('SELECT * FROM config'):
-    root = ET.fromstring(i[0])
+    root = ET.fromstring(i[1])
     print(root.tag, root.text)
     print_all(root)
     print("--------------")
 print("===========")
 for i in c.execute('SELECT * FROM speech'):
-    root = ET.fromstring(i[0])
+    root = ET.fromstring(i[1])
     print(root.tag, root.text)
     print_all(root)
     print("--------------")
 
 for i in c.execute('SELECT * FROM tags'):
-    root = ET.fromstring(i[0])
+    root = ET.fromstring(i[1])
     print(root.tag, root.text)
     print_all(root)
     print("--------------")
 
 
 for i in c.execute('SELECT * FROM phrase'):
-    root = ET.fromstring(i[0])
+    root = ET.fromstring(i[1])
     print(root.tag, root.text)
     print_all(root)
     print("--------------")

@@ -4,4 +4,6 @@
 	<medium_phrase EMOTION="3">I am fill nice</medium_phrase>
 	<angry_phrase EMOTION="1">I am very angry</angry_phrase>
 	<happy_phrase EMOTION="5">I am very happy</happy_phrase>	
+	<learning EMOTION="0">I am sorry, but I don't know answer to this question, do you have short introduction </learning>	
+	<learning_answer EMOTION="0">Okay, I will save it thanks </learning_answer>	
 </phrase>

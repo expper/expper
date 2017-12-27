@@ -1,10 +1,10 @@
 import os
 import re
 
-import json
-from os.path import join, dirname
-from watson_developer_cloud import TextToSpeechV1
-import pygame
+#import json
+#from os.path import join, dirname
+#from watson_developer_cloud import TextToSpeechV1
+#import pygame
 
 
 class text_to_voice:

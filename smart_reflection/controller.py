@@ -77,14 +77,14 @@ class controller(metaclass=Singleton):
         print(':Running:')
         self.__set_current_state(base_state.RUNNING)
         while True:
-            try:
-                l = self.get_input_objects()
-                if len(l) != 0:
-                    l = self.to_outputs(l)
-                    self.process_outputs(l)
-                    self.time_cmp.update()
-            except:
-                print("Unknown exception.")
+            #try:
+            l = self.get_input_objects()
+            if len(l) != 0:
+                l = self.to_outputs(l)
+                self.process_outputs(l)
+                self.time_cmp.update()
+            #except:
+                #print("Unknown exception.")
 
 if __name__ == "__main__":
     db_name = sys.argv[1]

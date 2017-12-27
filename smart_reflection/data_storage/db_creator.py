@@ -12,18 +12,18 @@ def create_and_insert_to_db(c, xml_path):
 	root = tree.getroot()
 	
 	# Create table with name XML root object
-	c.execute('''CREATE TABLE ''' + root.tag + ''' (xml_line text)''')
+	c.execute('''CREATE TABLE ''' + root.tag + ''' (Tag text, xml_line text)''')
 
 	if root.tag != 'speech':
 		# Convert XML hierarchy to string
 		x = ET.tostring(root, encoding='utf8', method='xml').decode(encoding='utf8').replace('\'', '\"')
-		c.execute("INSERT INTO " + root.tag + " VALUES ('" + x + "')")
+		c.execute("INSERT INTO " + root.tag + " VALUES ('" + root.tag + "', '" + x + "')")
 		return
 	
 	for i in root:
 		x = ET.tostring(i, encoding='utf8', method='xml').decode(encoding='utf8').replace('\'', '\"')
     	# Insert into DB XML string
-		c.execute("INSERT INTO " + root.tag + " VALUES ('" + x + "')")
+		c.execute("INSERT INTO " + root.tag + " VALUES ('" + i.tag + "', '" + x + "')")
 
 
 db_path = sys.argv[1]
