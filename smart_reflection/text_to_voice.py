@@ -16,8 +16,8 @@ class text_to_voice:
    #    x_watson_learning_opt_out=True)  # Optional flag
 
     def to_voice(self, text):
-        print("ANSWER--> ", text)
-        #os.system("/usr/local/bin/google_speech -l en \"" + text + "\"") 
+        #print("ANSWER--> ", text)
+        os.system("/usr/local/bin/google_speech -l en \"" + text + "\"") 
    #    with open(join(dirname(__file__), './output.mp3'), 'wb') as audio_file:
    #        audio_file.write(self.text_to_speech.synthesize(text, accept='audio/mp3', voice="en-US_LisaVoice"))
    #        audio_file.close()

@@ -173,6 +173,11 @@ class speech:
 
     def get_answer(self, s):
         if True == self.transaction.is_learning():
+            if -1 != s.find("no"):
+                self.transaction.update("")
+                return ""
+            elif -1 != s.find("no"):
+                s = s.replace("yes", "")
             self.add_answer_to_learning_list(self.transaction.get_last_speech(), s)
             self.transaction.update("")
             t = self.phrase.get_learning_answer_phrase(self.config.get_EMOTION_state())

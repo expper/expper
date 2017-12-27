@@ -72,7 +72,6 @@ class db_manager(metaclass=Singleton):
     def save_speech_learning(self, l):
         self.cursor.execute("DELETE FROM speech WHERE Tag = 'learning'")
         x = ET.tostring(l, encoding='utf8', method='xml').decode(encoding='utf8').replace('\'', '\"')
-        print(x)
         self.cursor.execute("INSERT INTO speech VALUES ('" + l.tag + "', '" + x + "')")
         self.connection.commit()
 
