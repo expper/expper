@@ -49,9 +49,9 @@
 				</answer>
 			</name>
 		</you>
-		<this>
+		<this learning="0">
 			<answer EMOTION="0" _TEXT="_TEXT_FROM_OBJECT">
-				<answer_text>This is _TEXT</answer_text>
+				<answer_text>_TEXT</answer_text>
 			</answer>
 		</this>
 	</what>
@@ -67,7 +67,24 @@
 			<answer_text>According wikipedia _wiki</answer_text>
 		</answer>
 	</tell>
-<learning>
-</learning>
+
+	<enable_camera>
+		<answer _cam="_ENABLE_CAMERA">
+			<answer_text>Okay Camera is enabled</answer_text>
+		</answer>
+	</enable_camera>
+	<disable_camera>
+		<answer _cam="_DISABLE_CAMERA">
+			<answer_text>Okay Camera is disablesd</answer_text>
+		</answer>
+	</disable_camera>
+	<read>
+		<answer _tfi="_TEXT_FROM_IMAGE">
+			<answer_text>_tfi</answer_text>
+		</answer>
+	</read>
+
+	<learning>
+	</learning>
 
 </speech>

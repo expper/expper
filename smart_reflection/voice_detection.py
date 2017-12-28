@@ -198,17 +198,12 @@ class voice_detection(object):
         except:
             None
         #nm = input("Enter a name: ")
+        if -1 != nm.lower().find("finish"):
+            quit()
         if -1 != nm.lower().find(self.name):
             speech_transaction().update("")
-            self.index = 1
             return ""
-        if self.index == 0:
+        if False == speech_transaction().in_transaction():
             return ""
-        if self.index > 1 and speech_transaction().get_last_speech() == "":
-            self.index = 0
-            return ""
-        if self.index == 1:
-                self.index = 2
         return nm
-        
 

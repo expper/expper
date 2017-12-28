@@ -38,4 +38,8 @@
 	<it>relate</it>
 	<it_is>relate</it_is>
 
+	<enable_camera>enable_camera</enable_camera>
+	<disable_camera>disable_camera</disable_camera>
+
+	<read_text>read</read_text>
 </tags>

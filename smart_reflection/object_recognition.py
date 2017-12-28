@@ -7,9 +7,31 @@ from __future__ import print_function
 import os
 import cv2
 import numpy
+import pytesseract
+from PIL import Image
 from classify_image import classify_image
 
-class object_recognition(object):
+class Singleton(type):
+    def __init__(cls, name, bases, attrs, **kwargs):
+        super().__init__(name, bases, attrs)
+        cls._instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
+
+class object_recognition(metaclass=Singleton):
+
+    def __init__(self):
+        self.is_enabled = False
+        self.frame = None
+
+    def set_enable_state(self, b):
+        self.is_enabled = b
+
+    def get_enable_state(self):
+        return self.is_enabled
 
     def __detected_object_to_answer(self, d):
         f = 0
@@ -21,17 +43,56 @@ class object_recognition(object):
         return s
 
     def detect_image(self):
-        c_img = classify_image()
-        cap = cv2.VideoCapture(0)
-        ret, frame = cap.read()
         path = "pt.png"
-        cv2.imwrite(path, frame)
+        cap = None
+        if False == self.is_enabled:
+            cap = cv2.VideoCapture(0)
+            ret, self.frame = cap.read()
+        cv2.imwrite(path, self.frame)
+        if cap != None:
+            cap.release()
+            cv2.destroyAllWindows()
+        c_img = classify_image()
+        s = self.__detected_object_to_answer(c_img.detect_image(path))
+        os.remove(path)
+        if s == "":
+            return "I am sorry but I don\'t know."
+        return "This is " + s
+
+    def text_from_image(self):
+        path1 = "pt.png"
+        path2 = "pt1.png"
+        cap = None
+        if False == self.is_enabled:
+            cap = cv2.VideoCapture(0)
+            ret, self.frame = cap.read()
+        cv2.imwrite(path1, self.frame)
+        if cap != None:
+            cap.release()
+            cv2.destroyAllWindows()
+        image = cv2.imread(path1)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        gray = cv2.threshold(gray, 0, 256, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+        cv2.imwrite(path2, gray)
+        text = pytesseract.image_to_string(Image.open(path2))
+        os.remove(path1)
+        os.remove(path2)
+        if text == "":
+            return "I am sorry but I can\'t read the text."
+        return text
+
+    def enable_camera(self):
+        cap = cv2.VideoCapture(0)
+        while(True):
+            ret, self.frame = cap.read()
+            #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            cv2.imshow('frame', self.frame)
+            if (cv2.waitKey(1) & 0xFF == ord('q')) or False == self.is_enabled:
+                break
+
+        # When everything done, release the capture
         cap.release()
         cv2.destroyAllWindows()
-        s = self.__detected_object_to_answer(c_img.detect_image(path))
-        print(s)
-        os.remove(path)
-        return s
 
 '''class capture(object):
     def __init__(self):

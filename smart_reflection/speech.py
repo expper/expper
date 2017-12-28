@@ -3,6 +3,7 @@ from __future__ import division
 from __future__ import print_function
 
 import re
+import threading
 from location import location
 from wiki import wiki
 from object_recognition import object_recognition
@@ -79,6 +80,13 @@ class speech:
                 return True
         return False
 
+    def _ENABLE_CAMERA(self):
+        object_recognition().set_enable_state(True)
+        object_recognition().enable_camera()
+
+    def _DISABLE_CAMERA(self):
+        object_recognition().set_enable_state(False)
+
     def __get_attrs(self, r):
         l = r.attrib
         ll = {}
@@ -97,11 +105,20 @@ class speech:
                         ll[i] = wiki().wiki_summary_search(self.current_question)
                     elif l[i] == "_WIKI_FULL_SEARCH":
                         ll[i] = wiki().wiki_full_search(self.current_question)
+                    elif l[i] == "_TEXT_FROM_IMAGE":
+                        ll[i] = object_recognition().text_from_image()
+                    elif l[i] == "_ENABLE_CAMERA":
+                        t = threading.Thread(target=self._ENABLE_CAMERA)
+                        t.start()
+                    elif l[i] == "_DISABLE_CAMERA":
+                        self._DISABLE_CAMERA()
                     else:
                         ll[i] = ""
                 except:
                     print("Exception when try to process XML instruction as a python function call.")
                     ll[i] = ""
+        if len(ll) != 0:
+            self.is_learning_mode = False
         return ll 
 
     def __add_answer_if_exist(self, r):
@@ -125,6 +142,10 @@ class speech:
                     break
         return b
 
+    
+    def update_learning_state(self, r):
+        if "1" == r.get("learning"):
+            self.is_learning_mode = True
 
     def find_answer(self, r, index = 0):
         t = self.current_question
@@ -132,11 +153,10 @@ class speech:
             t = t.replace("  ", " ").replace(" ", "_")
             if t[0] == "_":
                 t = t[1:len(t)]
-            if t[len(t) - 1] == "_":
+            if len(t) > 0 and t[len(t) - 1] == "_":
                 t = t[0:len(t) - 1]
         if (index < len(self.question) and r.tag == self.question[index]) or r.tag == t:
-            if "1" == r.get("learning"):
-                self.is_learning_mode = True
+            self.update_learning_state(r)
             if True == self.__add_answer_if_exist(r):
                 del self.question[0:index + 1]
             else:
@@ -156,9 +176,9 @@ class speech:
                 d = child
         if self.current_question != "":
             self.current_question = self.current_question.replace("  ", " ").replace(" ", "_")
-            if self.current_question[0] == "_":
+            if len(self.current_question) > 0 and self.current_question[0] == "_":
                 self.current_question = self.current_question[1:len(self.current_question)]
-            if self.current_question[len(self.current_question) - 1] == "_":
+            if len(self.current_question) > 0 and self.current_question[len(self.current_question) - 1] == "_":
                 self.current_question = self.current_question[0:len(self.current_question) - 1]
             child = ET.Element(self.current_question)
             d.append(child)
@@ -173,10 +193,11 @@ class speech:
 
     def get_answer(self, s):
         if True == self.transaction.is_learning():
+            s = s.lower()
             if -1 != s.find("no"):
                 self.transaction.update("")
                 return ""
-            elif -1 != s.find("no"):
+            elif -1 != s.find("yes"):
                 s = s.replace("yes", "")
             self.add_answer_to_learning_list(self.transaction.get_last_speech(), s)
             self.transaction.update("")

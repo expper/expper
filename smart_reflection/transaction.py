@@ -30,12 +30,23 @@ class speech_transaction(metaclass=Singleton):
     def is_learning(self):
         return self.learning
 
+    def in_transaction(self):
+        t = time_()
+        if self.learning == True and abs(t.get_time_diff_S() - self.current_time.get_time_diff_S()) < 12:
+            return True
+        if abs(t.get_time_diff_S() - self.current_time.get_time_diff_S()) < 7:
+            return True
+        return False
+
     def get_last_speech(self):
         t = time_()
         if self.last_speech == "":
             self.learning = False
             return ""
-        if abs(t.get_time_diff_S() - self.current_time.get_time_diff_S()) > 18:
+        if self.learning == True and abs(t.get_time_diff_S() - self.current_time.get_time_diff_S()) < 12:
+            self.current_time = time_()
+            return self.last_speech
+        if abs(t.get_time_diff_S() - self.current_time.get_time_diff_S()) > 5:
             self.learning = False
             self.last_speech = ""
             return ""
