@@ -96,4 +96,6 @@ https://pypi.python.org/pypi/google_speech/
 dnf install sox
 pip3 install --upgrade google-cloud-speech
 
-
+pip3 install Pillow
+pip3 install pytesseract
+dnf  install tesseract
